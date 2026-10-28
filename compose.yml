@@ -1,0 +1,11 @@
+services:
+  server:
+    image: jc21/nginx-proxy-manager:2.16.0
+    container_name: nginx-proxy-manager
+    network_mode: host
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+

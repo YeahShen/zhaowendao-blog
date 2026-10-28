@@ -35,9 +35,9 @@ announcement: 欢迎来到我的博客，不定期更新技术笔记与实用资
 
 # 网站资讯卡片（侧栏）
 webinfo:
-  post_count: true      # 文章数目
-  runtime: true         # 已运行时间
-  last_push: true       # 最后更新
+  post_count: false      # 文章数目 
+  runtime: false         # 已运行时间
+  last_push: false       # 最后更新
 
 # 页脚
 footer:
