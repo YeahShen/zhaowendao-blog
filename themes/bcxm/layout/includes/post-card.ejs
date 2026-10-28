@@ -1,0 +1,46 @@
+<%
+  var excerptLength = theme.index_excerpt_length || 140;
+  var cover = bcxm_cover(post);
+  var cats = post.categories ? post.categories.toArray() : [];
+  var tags = post.tags ? post.tags.toArray() : [];
+%>
+<article class="post-card">
+  <% if (theme.index_cover !== false) { %>
+  <a class="post-card-cover" href="<%= url_for(post.path) %>" tabindex="-1" aria-hidden="true">
+    <% if (cover) { %>
+    <img src="<%= cover %>" alt="" loading="lazy" decoding="async">
+    <% } else { %>
+    <span class="cover-fallback"><%= (post.title || '·').slice(0, 1) %></span>
+    <% } %>
+  </a>
+  <% } %>
+
+  <div class="post-card-body">
+    <h2 class="post-card-title">
+      <a href="<%= url_for(post.path) %>"><%= post.title %></a>
+    </h2>
+
+    <div class="post-card-meta">
+      <span class="meta-item"><%- icon('calendar') %><%= date(post.date, 'YYYY-MM-DD') %></span>
+      <% if (cats.length) { %>
+      <span class="meta-item meta-cats">
+        <%- icon('folder') %>
+        <% cats.forEach(function (cat, i) { %><% if (i) { %>,<% } %><a href="<%= url_for(cat.path) %>"><%= cat.name %></a><% }) %>
+      </span>
+      <% } %>
+    </div>
+
+    <p class="post-card-excerpt"><%= bcxm_excerpt(post, excerptLength) %></p>
+
+    <div class="post-card-foot">
+      <a class="post-card-more" href="<%= url_for(post.path) %>">阅读全文 <span aria-hidden="true">→</span></a>
+      <% if (tags.length) { %>
+      <div class="post-card-tags">
+        <% tags.slice(0, 3).forEach(function (tag) { %>
+        <a class="chip" href="<%= url_for(tag.path) %>">#<%= tag.name %></a>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,31 @@
+<footer id="footer" class="site-footer">
+  <div class="footer-inner">
+    <% if (theme.footer && theme.footer.custom_text) { %>
+    <p class="footer-custom"><%- theme.footer.custom_text %></p>
+    <% } %>
+
+    <p class="footer-copyright">
+      <span class="footer-symbol" aria-hidden="true">©</span>
+      <%= theme.footer && theme.footer.since ? theme.footer.since : 2024 %>
+      - <%= new Date().getFullYear() %>
+      By <%= (theme.footer && theme.footer.owner) || config.author %>
+    </p>
+
+    <% if (!theme.footer || theme.footer.copyright !== false) { %>
+    <p class="footer-tech">
+      框架 <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a>
+      <span class="footer-sep">|</span>
+      主题 <a href="https://github.com/chenxz21/hexo-theme-bcxm" target="_blank" rel="noopener noreferrer">bcxm</a>
+    </p>
+    <% } %>
+
+    <% if (theme.footer && theme.footer.icp) { %>
+    <p class="footer-beian">
+      <a class="beian-link"
+         href="<%= theme.footer.icp_link || 'https://beian.miit.gov.cn/' %>"
+         target="_blank"
+         rel="noopener noreferrer nofollow"><%= theme.footer.icp %></a>
+    </p>
+    <% } %>
+  </div>
+</footer>

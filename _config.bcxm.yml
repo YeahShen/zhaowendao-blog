@@ -1,0 +1,67 @@
+# ==========================================================
+#  bcxm 主题：站点级自定义
+#  这里只放「你需要改」的东西，主题默认值在 themes/bcxm/_config.yml
+#  Hexo 会把这份配置深度合并覆盖到主题默认配置上
+# ==========================================================
+
+# 头像与站点图标（放在 source/img/ 下）
+avatar: /img/avatar.svg
+
+# 侧栏头像下面的自我介绍
+description: 朝闻道，夕死可矣
+
+# 社交图标：icon 支持 github / mail / twitter / rss / weibo / zhihu
+social:
+  - name: GitHub
+    icon: github
+    link: https://github.com/yourname
+  - name: Email
+    icon: mail
+    link: mailto:you@example.com
+
+# 顶部导航
+# 写法：路径 || 图标名  —— 图标可省略
+# 想加二级菜单：键名写成「标题||图标」并留空值，下一行写缩进的子项
+menu:
+  首页: / || home
+  时间轴: /archives/ || clock
+  标签: /tags/ || tag
+  分类: /categories/ || folder
+  关于: /about/ || user
+  友链: /links/ || link
+
+# 侧栏公告卡片
+announcement: 欢迎来到我的博客，不定期更新技术笔记与实用资源。
+
+# 网站资讯卡片（侧栏）
+webinfo:
+  post_count: true      # 文章数目
+  runtime: true         # 已运行时间
+  last_push: true       # 最后更新
+
+# 页脚
+footer:
+  since: 2026
+  owner: ''             # 留空则跟随 _config.yml 里的 author
+  copyright: false       # 显示「框架 Hexo | 主题 bcxm」
+  custom_text: ''       # 自定义文案，例如公安备案号
+  # ICP 备案号：工信部要求放在网站底部，并链接到备案查询系统
+  icp: '粤ICP备2026165365号'
+  icp_link: https://beian.miit.gov.cn/
+
+# 首页文章摘要长度（字数）
+index_excerpt_length: 140
+
+# 文章页目录
+toc:
+  enable: true
+  expand: false
+
+# 深色模式
+darkmode:
+  enable: true
+  auto: false           # true 则跟随系统
+
+# 本地搜索
+search:
+  enable: true

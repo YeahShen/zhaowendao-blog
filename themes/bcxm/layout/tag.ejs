@@ -1,0 +1,11 @@
+<div class="page-hero card-widget">
+  <p class="page-hero-kicker">标签</p>
+  <h1 class="page-hero-title">#<%= page.tag || page.title || '标签' %></h1>
+  <p class="page-hero-desc">共 <%= page.posts.length %> 篇文章</p>
+</div>
+
+<div class="post-list">
+  <% page.posts.each(function (post) { %>
+    <%- partial('includes/post-card', { post: post }) %>
+  <% }) %>
+</div>

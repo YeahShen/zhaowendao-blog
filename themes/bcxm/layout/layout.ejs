@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'zh-CN' %>" data-theme="light">
+<head>
+  <%- partial('includes/head') %>
+</head>
+<body class="<%= is_post() ? 'page-post' : (is_home() || is_archive() || is_tag() || is_category() ? 'page-list' : 'page-single') %>">
+  <% if (theme.scroll_percent) { %>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <% } %>
+
+  <%- partial('includes/header') %>
+  <%- partial('includes/drawer') %>
+
+  <div id="content-inner" class="layout<%= (!theme.aside || theme.aside.enable === false) ? ' no-aside' : '' %><%= (theme.aside && theme.aside.position === 'right') ? ' aside-right' : '' %>">
+    <%- partial('includes/aside') %>
+    <main id="main-content" class="main-content">
+      <%- body %>
+    </main>
+  </div>
+
+  <%- partial('includes/footer') %>
+  <%- partial('includes/rightside') %>
+  <% if (theme.search && theme.search.enable) { %><%- partial('includes/search') %><% } %>
+
+  <script src="<%- url_for('/js/main.js') %>" defer></script>
+</body>
+</html>

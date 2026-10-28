@@ -1,0 +1,22 @@
+# Not needed in the build context.
+# public/ must NOT be ignored: the Dockerfile copies it into the image, and CI
+# generates it with `pnpm run build` before `docker build`.
+node_modules
+db.json
+.deploy*/
+*.log
+
+# Local tooling & VCS metadata
+.git
+.gitignore
+.github
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Docs and Docker files themselves
+docs
+README.md
+Dockerfile
+.dockerignore

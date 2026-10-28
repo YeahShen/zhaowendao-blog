@@ -1,0 +1,27 @@
+<%
+  var posts = (page.posts && page.posts.toArray) ? page.posts.toArray() : site.posts.toArray();
+  var heading = page.title || '时间轴';
+  var currentYear = null;
+%>
+
+<div class="page-hero card-widget">
+  <h1 class="page-hero-title"><%= heading %></h1>
+  <p class="page-hero-desc">共 <%= posts.length %> 篇文章 · 按时间倒序</p>
+</div>
+
+<div class="card-widget archive-card">
+  <div class="archive-list">
+    <% posts.forEach(function (post) { %>
+      <% var y = post.date ? post.date.year() : null; %>
+      <% if (y !== null && y !== currentYear) { currentYear = y; %>
+      <h2 class="archive-year"><span><%= y %></span></h2>
+      <% } %>
+      <% var cat = (post.categories && post.categories.length) ? post.categories.toArray()[0] : null; %>
+      <a class="archive-item" href="<%= url_for(post.path) %>">
+        <time class="archive-date" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
+        <span class="archive-title"><%= post.title %></span>
+        <% if (cat) { %><span class="archive-cat"><%= cat.name %></span><% } %>
+      </a>
+    <% }) %>
+  </div>
+</div>

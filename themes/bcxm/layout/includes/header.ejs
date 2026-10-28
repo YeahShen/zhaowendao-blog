@@ -1,0 +1,48 @@
+<header id="page-header" class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="<%= url_for('/') %>">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span class="brand-title"><%= config.title %></span>
+    </a>
+
+    <nav class="nav" aria-label="主导航">
+      <% bcxm_menu().forEach(function (item) { %>
+        <% if (item.children && item.children.length) { %>
+        <div class="nav-item has-children">
+          <button class="nav-link nav-toggle" type="button" aria-expanded="false">
+            <%= item.name %><%- icon('chevron-down', 'caret') %>
+          </button>
+          <div class="nav-dropdown">
+            <% item.children.forEach(function (child) { %>
+            <a class="dropdown-link" href="<%= child.href %>"<%- child.external ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
+              <%- icon(child.icon || 'link') %><span><%= child.name %></span>
+            </a>
+            <% }) %>
+          </div>
+        </div>
+        <% } else { %>
+        <a class="nav-link<%= bcxm_active(item.path) ? ' active' : '' %>" href="<%= item.href %>"<%- item.external ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
+          <%= item.name %>
+        </a>
+        <% } %>
+      <% }) %>
+    </nav>
+
+    <div class="header-actions">
+      <% if (theme.search && theme.search.enable) { %>
+      <button class="icon-btn" id="search-open" type="button" aria-label="搜索">
+        <%- icon('search') %>
+      </button>
+      <% } %>
+      <% if (theme.darkmode && theme.darkmode.enable) { %>
+      <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="切换深色模式">
+        <span class="theme-icon theme-icon-light"><%- icon('moon') %></span>
+        <span class="theme-icon theme-icon-dark"><%- icon('sun') %></span>
+      </button>
+      <% } %>
+      <button class="icon-btn nav-burger" id="drawer-open" type="button" aria-label="打开菜单" aria-expanded="false">
+        <%- icon('menu') %>
+      </button>
+    </div>
+  </div>
+</header>

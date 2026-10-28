@@ -1,0 +1,101 @@
+<%
+  var cats = page.categories ? page.categories.toArray() : [];
+  var tags = page.tags ? page.tags.toArray() : [];
+  var wc = bcxm_wordcount(page);
+  var relatedLimit = (theme.related_post && theme.related_post.limit) || 3;
+  var related = [];
+  if (theme.related_post && theme.related_post.enable) {
+    (page.categories ? page.categories.toArray() : []).forEach(function (cat) {
+      if (!cat.posts) return;
+      cat.posts.sort('-date').each(function (p) {
+        if (related.length >= relatedLimit) return;
+        if (p._id === page._id) return;
+        if (related.some(function (r) { return r._id === p._id; })) return;
+        related.push(p);
+      });
+    });
+  }
+  var cover = page.cover ? url_for(page.cover) : '';
+%>
+
+<article class="post-full card-widget">
+  <header class="post-header">
+    <h1 class="post-title"><%= page.title %></h1>
+
+    <div class="post-meta">
+      <span class="meta-item"><%- icon('calendar') %><time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY-MM-DD') %></time></span>
+      <% if (cats.length) { %>
+      <span class="meta-item"><%- icon('folder') %><% cats.forEach(function (cat, i) { %><% if (i) { %>, <% } %><a href="<%= url_for(cat.path) %>"><%= cat.name %></a><% }) %></span>
+      <% } %>
+      <span class="meta-item"><%- icon('pen') %><%= wc.words %> 字 · 约 <%= wc.minutes %> 分钟</span>
+      <% if (page.updated && Math.abs(page.updated - page.date) > 86400000) { %>
+      <span class="meta-item meta-updated"><%- icon('clock') %>更新于 <%= date(page.updated, 'YYYY-MM-DD') %></span>
+      <% } %>
+    </div>
+  </header>
+
+  <% if (cover && theme.post_cover === true) { %>
+  <div class="post-cover"><img src="<%= cover %>" alt="<%= page.title %>" loading="lazy" decoding="async"></div>
+  <% } %>
+
+  <div class="post-content article-content" id="article-content">
+    <%- page.content %>
+  </div>
+
+  <% if (tags.length) { %>
+  <div class="post-tags">
+    <% tags.forEach(function (tag) { %>
+    <a class="chip" href="<%= url_for(tag.path) %>">#<%= tag.name %></a>
+    <% }) %>
+  </div>
+  <% } %>
+
+  <% if (theme.post_copyright && theme.post_copyright.enable !== false) { %>
+  <div class="post-copyright">
+    <p class="copyright-line">
+      <strong>本文作者：</strong><%= config.author %>
+    </p>
+    <p class="copyright-line">
+      <strong>本文链接：</strong><a href="<%= config.url.replace(/\/$/, '') + url_for(page.path) %>"><%= config.url.replace(/\/$/, '') + url_for(page.path) %></a>
+    </p>
+    <p class="copyright-line">
+      <strong>版权声明：</strong>本博客所有文章除特别声明外，均采用
+      <a href="<%= theme.post_copyright.license_url %>" target="_blank" rel="noopener noreferrer"><%= theme.post_copyright.license %></a>
+      许可协议。转载请注明出处！
+    </p>
+  </div>
+  <% } %>
+</article>
+
+<% if (theme.post_pagination !== false) { %>
+<nav class="post-pagination" aria-label="上一篇 / 下一篇">
+  <% if (page.prev) { %>
+  <a class="post-pagination-item prev" href="<%= url_for(page.prev.path) %>">
+    <span class="pp-label">← 上一篇</span>
+    <span class="pp-title"><%= page.prev.title %></span>
+  </a>
+  <% } else { %><span class="post-pagination-item is-empty"></span><% } %>
+  <% if (page.next) { %>
+  <a class="post-pagination-item next" href="<%= url_for(page.next.path) %>">
+    <span class="pp-label">下一篇 →</span>
+    <span class="pp-title"><%= page.next.title %></span>
+  </a>
+  <% } %>
+</nav>
+<% } %>
+
+<% if (related.length) { %>
+<section class="related-post card-widget">
+  <div class="section-title"><%- icon('link') %><span>相关文章</span></div>
+  <ul class="related-list">
+    <% related.forEach(function (item) { %>
+    <li>
+      <a href="<%= url_for(item.path) %>">
+        <span class="related-title"><%= item.title %></span>
+        <time><%= date(item.date, 'YYYY-MM-DD') %></time>
+      </a>
+    </li>
+    <% }) %>
+  </ul>
+</section>
+<% } %>

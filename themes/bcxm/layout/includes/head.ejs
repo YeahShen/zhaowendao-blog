@@ -1,0 +1,54 @@
+<%
+  var pageTitle = page.title
+    ? page.title + ' - ' + config.title
+    : (config.subtitle ? config.title + ' - ' + config.subtitle : config.title);
+  var rawDesc = page.description || page.excerpt || config.description || '';
+  var desc = strip_html(rawDesc).replace(/\s+/g, ' ').trim().substring(0, 150);
+  var canonical = config.url.replace(/\/$/, '') + '/' + String(page.path || '').replace(/index\.html$/, '');
+  var ogCover = page.cover ? config.url.replace(/\/$/, '') + url_for(page.cover) : '';
+%>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title><%= pageTitle %></title>
+  <meta name="description" content="<%= desc %>">
+  <% if (config.keywords) { %><meta name="keywords" content="<%= config.keywords %>"><% } %>
+  <meta name="author" content="<%= config.author || '' %>">
+  <meta name="theme-color" content="<%= theme.theme_color.main || '#49B1F5' %>">
+  <% if (config.meta_generator) { %><%- meta_generator() %><% } %>
+  <link rel="canonical" href="<%= canonical %>">
+
+  <meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
+  <meta property="og:title" content="<%= pageTitle %>">
+  <meta property="og:description" content="<%= desc %>">
+  <meta property="og:url" content="<%= canonical %>">
+  <meta property="og:site_name" content="<%= config.title %>">
+  <% if (ogCover) { %><meta property="og:image" content="<%= ogCover %>"><% } %>
+  <% if (is_post()) { %>
+  <meta property="article:published_time" content="<%= date_xml(page.date) %>">
+  <meta property="article:modified_time" content="<%= date_xml(page.updated || page.date) %>">
+  <% } %>
+
+  <% if (theme.favicon) { %>
+  <link rel="icon" href="<%= url_for(theme.favicon) %>">
+  <link rel="apple-touch-icon" href="<%= url_for(theme.favicon) %>">
+  <% } %>
+
+  <link rel="stylesheet" href="<%= url_for('/css/style.css') %>">
+  <link rel="stylesheet" href="<%= url_for('/css/post.css') %>">
+
+  <script>
+    /* 首屏前置：避免深色模式闪白 */
+    (function () {
+      try {
+        var saved = localStorage.getItem('bcxm-theme');
+        var auto = <%= (theme.darkmode && theme.darkmode.auto) ? 'true' : 'false' %>;
+        var dark = saved ? saved === 'dark'
+          : (auto && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    :root { <%- bcxm_palette() %> }
+  </style>

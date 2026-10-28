@@ -1,0 +1,95 @@
+<% if (theme.aside && theme.aside.enable !== false) { %>
+<aside id="aside-content" class="aside-content">
+  <div class="aside-sticky">
+
+    <% if (theme.aside.card_author !== false) { %>
+    <section class="card-widget card-author">
+      <div class="author-avatar">
+        <img src="<%= url_for(theme.avatar) %>" alt="<%= config.author %>" loading="lazy">
+      </div>
+      <div class="author-name"><%= config.author %></div>
+      <div class="author-desc"><%= theme.description %></div>
+
+      <div class="author-stats">
+        <a class="author-stat" href="<%= url_for('/archives/') %>">
+          <span class="stat-num"><%= site.posts.length %></span>
+          <span class="stat-label">文章</span>
+        </a>
+        <a class="author-stat" href="<%= url_for('/tags/') %>">
+          <span class="stat-num"><%= site.tags.length %></span>
+          <span class="stat-label">标签</span>
+        </a>
+        <a class="author-stat" href="<%= url_for('/categories/') %>">
+          <span class="stat-num"><%= site.categories.length %></span>
+          <span class="stat-label">分类</span>
+        </a>
+      </div>
+
+      <% if (theme.social && theme.social.length) { %>
+      <div class="author-social">
+        <% theme.social.forEach(function (s) { %>
+        <a href="<%= s.link %>" class="social-link" aria-label="<%= s.name %>" title="<%= s.name %>"<%- /^https?:/.test(s.link) ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
+          <%- icon(s.icon || 'link') %>
+        </a>
+        <% }) %>
+      </div>
+      <% } %>
+    </section>
+    <% } %>
+
+    <% if (theme.aside.card_announcement !== false && theme.announcement) { %>
+    <section class="card-widget card-announcement">
+      <div class="item-headline"><%- icon('heart') %><span>公告</span></div>
+      <div class="announcement-body"><%= theme.announcement %></div>
+    </section>
+    <% } %>
+
+    <% if (is_post() && theme.toc && theme.toc.enable) { %>
+    <section class="card-widget card-toc" id="card-toc">
+      <div class="item-headline"><%- icon('list') %><span>目录</span><em class="toc-percent" id="toc-percent">0%</em></div>
+      <div class="toc-body">
+        <% if (bcxm_has_toc(page)) { %>
+          <%- toc(page.content, { class: 'toc', list_number: theme.toc.number !== false }) %>
+        <% } else { %>
+          <p class="toc-empty">本文没有二级标题</p>
+        <% } %>
+      </div>
+    </section>
+    <% } %>
+
+    <% if (theme.aside.card_categories !== false && site.categories.length) { %>
+    <section class="card-widget card-categories">
+      <div class="item-headline"><%- icon('folder') %><span>分类</span></div>
+      <ul class="card-category-list">
+        <% site.categories.toArray().sort(function (a, b) { return b.length - a.length; }).slice(0, theme.aside.categories_limit || 8).forEach(function (cat) { %>
+        <li class="category-item">
+          <a href="<%= url_for(cat.path) %>">
+            <span class="category-name"><%= cat.name %></span>
+            <span class="category-count"><%= cat.length %></span>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </section>
+    <% } %>
+
+    <% if (theme.aside.card_webinfo !== false && theme.webinfo) { %>
+    <section class="card-widget card-webinfo">
+      <div class="item-headline"><%- icon('eye') %><span>网站资讯</span></div>
+      <div class="webinfo">
+        <% if (theme.webinfo.post_count !== false) { %>
+        <div class="webinfo-item"><span>文章数目</span><b><%= site.posts.length %></b></div>
+        <% } %>
+        <% if (theme.webinfo.runtime !== false) { %>
+        <div class="webinfo-item"><span>已运行时间</span><b><%= bcxm_runtime(theme.runtime_since) %></b></div>
+        <% } %>
+        <% if (theme.webinfo.last_push && site.posts.length) { %>
+        <div class="webinfo-item"><span>最后更新</span><b><%= date(site.posts.sort('-updated').first().updated, 'YYYY-MM-DD') %></b></div>
+        <% } %>
+      </div>
+    </section>
+    <% } %>
+
+  </div>
+</aside>
+<% } %>

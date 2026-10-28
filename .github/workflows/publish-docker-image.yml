@@ -1,0 +1,89 @@
+name: Publish Docker Image
+
+# Builds the Hexo site, bakes the generated public/ directory into the nginx
+# image defined by ./Dockerfile, then pushes it to Aliyun ACR.
+#
+# Required repository secrets:
+#   ACR_USERNAME - Aliyun account name (or an ACR access username)
+#   ACR_PASSWORD - the registry password set for that user in the ACR console
+#
+# Release: git tag v1.0.0 && git push origin v1.0.0
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never abort a push that is already uploading layers
+concurrency:
+  group: publish-docker-image-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: registry.cn-hangzhou.aliyuncs.com
+  IMAGE: registry.cn-hangzhou.aliyuncs.com/ashen_station/zhaowendao-blog
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 11
+        run_install: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: pnpm
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    # public/ is gitignored and the Dockerfile copies it, so generate it first
+    - name: Generate static site
+      run: pnpm run build
+
+    - name: Verify build output
+      run: test -f public/index.html
+
+    - name: Login to Aliyun ACR
+      uses: docker/login-action@v3
+      with:
+        registry: registry.cn-hangzhou.aliyuncs.com
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.IMAGE }}
+        # v1.2.3 -> v1.2.3, plus a moving latest tag
+        tags: |
+          type=ref,event=tag
+          type=raw,value=latest
+
+    - name: Set up Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max

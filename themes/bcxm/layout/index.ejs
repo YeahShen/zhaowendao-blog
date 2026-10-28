@@ -1,0 +1,11 @@
+<div class="post-list">
+  <% page.posts.each(function (post) { %>
+    <%- partial('includes/post-card', { post: post }) %>
+  <% }) %>
+</div>
+
+<% if (page.total > 1) { %>
+<nav class="pagination" aria-label="分页导航">
+  <%- paginator({ prev_text: '上一页', next_text: '下一页', space: '…' }) %>
+</nav>
+<% } %>

@@ -1,0 +1,44 @@
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-backdrop" data-drawer-close></div>
+  <aside class="drawer-panel" role="dialog" aria-label="侧边菜单">
+    <div class="drawer-head">
+      <span class="drawer-title"><%= config.title %></span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="关闭菜单"><%- icon('close') %></button>
+    </div>
+
+    <div class="drawer-author">
+      <img class="drawer-avatar" src="<%= url_for(theme.avatar) %>" alt="<%= config.author %>" loading="lazy">
+      <div class="drawer-author-meta">
+        <span class="drawer-name"><%= config.author %></span>
+        <span class="drawer-desc"><%= theme.description %></span>
+      </div>
+    </div>
+
+    <nav class="drawer-nav" aria-label="移动端导航">
+      <% bcxm_menu().forEach(function (item) { %>
+        <% if (item.children && item.children.length) { %>
+        <div class="drawer-group">
+          <span class="drawer-link drawer-group-title"><%- icon(item.icon || 'list') %><%= item.name %></span>
+          <% item.children.forEach(function (child) { %>
+          <a class="drawer-link drawer-sub" href="<%= child.href %>"<%- child.external ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
+            <%- icon(child.icon || 'link') %><span><%= child.name %></span>
+          </a>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <a class="drawer-link<%= bcxm_active(item.path) ? ' active' : '' %>" href="<%= item.href %>"<%- item.external ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
+          <%- icon(item.icon || 'link') %><span><%= item.name %></span>
+        </a>
+        <% } %>
+      <% }) %>
+    </nav>
+
+    <% if (theme.social && theme.social.length) { %>
+    <div class="drawer-social">
+      <% theme.social.forEach(function (s) { %>
+      <a href="<%= s.link %>" aria-label="<%= s.name %>"<%- /^https?:/.test(s.link) ? ' target="_blank" rel="noopener noreferrer"' : '' %>><%- icon(s.icon || 'link') %></a>
+      <% }) %>
+    </div>
+    <% } %>
+  </aside>
+</div>

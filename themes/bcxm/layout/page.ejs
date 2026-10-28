@@ -1,0 +1,45 @@
+<% if (page.type === 'tags') { %>
+  <div class="page-hero card-widget">
+    <h1 class="page-hero-title"><%= page.title || '标签' %></h1>
+    <p class="page-hero-desc">共 <%= site.tags.length %> 个标签</p>
+    <% if (page.content) { %><div class="page-hero-content"><%- page.content %></div><% } %>
+  </div>
+
+  <div class="card-widget tag-cloud-card">
+    <% site.tags.toArray().sort(function (a, b) { return b.length - a.length; }).forEach(function (tag) { %>
+    <a class="tag-cloud-item" href="<%= url_for(tag.path) %>">
+      <span class="tag-cloud-name"><%= tag.name %></span>
+      <span class="tag-cloud-count"><%= tag.length %></span>
+    </a>
+    <% }) %>
+  </div>
+
+<% } else if (page.type === 'categories') { %>
+  <div class="page-hero card-widget">
+    <h1 class="page-hero-title"><%= page.title || '分类' %></h1>
+    <p class="page-hero-desc">共 <%= site.categories.length %> 个分类</p>
+    <% if (page.content) { %><div class="page-hero-content"><%- page.content %></div><% } %>
+  </div>
+
+  <div class="card-widget category-page-card">
+    <% site.categories.toArray().sort(function (a, b) { return String(a.name).localeCompare(String(b.name), 'zh'); }).forEach(function (cat) { %>
+    <a class="category-page-item" href="<%= url_for(cat.path) %>">
+      <span class="category-page-name"><%- icon('folder') %><%= cat.name %></span>
+      <span class="category-page-count"><%= cat.length %> 篇</span>
+    </a>
+    <% }) %>
+  </div>
+
+<% } else { %>
+  <article class="page-full card-widget">
+    <% if (page.title) { %>
+    <header class="post-header">
+      <h1 class="post-title"><%= page.title %></h1>
+      <% if (page.subtitle) { %><p class="page-subtitle"><%= page.subtitle %></p><% } %>
+    </header>
+    <% } %>
+    <div class="post-content article-content">
+      <%- page.content %>
+    </div>
+  </article>
+<% } %>

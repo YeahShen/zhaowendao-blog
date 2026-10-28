@@ -1,0 +1,116 @@
+# ==========================================================
+#  bcxm 主题默认配置
+#  不要直接改这里 —— 在站点根目录的 _config.bcxm.yml 里覆盖
+#  本文件只声明默认值和可选能力
+# ==========================================================
+
+# 主题版本（页脚展示用）
+version: 1.0.0
+
+# -------- 站点身份 --------
+avatar: /img/avatar.svg
+description: 这个人很懒，什么都没写
+favicon: /img/favicon.svg
+
+# 社交图标列表：{ name, icon, link }
+# icon 可选值见 themes/bcxm/scripts/helpers/icon.js 中的图标表
+social: []
+
+# -------- 导航 --------
+# 值写法：路径 || 图标名
+# 二级菜单：键名写「标题||图标」，值为对象
+menu:
+  首页: / || home
+  时间轴: /archives/ || clock
+  标签: /tags/ || tag
+  分类: /categories/ || folder
+  关于: /about/ || user
+  友链: /links/ || link
+
+# -------- 侧栏 --------
+aside:
+  enable: true
+  position: left          # left / right
+  card_author: true
+  card_announcement: true
+  card_categories: true
+  card_webinfo: true
+  announcement: ''
+  categories_limit: 8
+
+webinfo:
+  post_count: true
+  runtime: true
+  last_push: false
+
+# 站点开始运行日期（侧栏「已运行时间」从这天算起）
+runtime_since: 2024-01-01
+
+# -------- 首页 --------
+index_excerpt_length: 140
+index_cover: true          # 首页卡片是否显示封面
+
+# -------- 文章页 --------
+toc:
+  enable: true
+  expand: false
+  number: true
+
+# 文章页顶部是否展示封面大图（bcxm 原站不展示，保持 false 更利阅读）
+post_cover: false
+
+post_copyright:
+  enable: true
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+related_post:
+  enable: true
+  limit: 3
+
+post_pagination: true
+
+# -------- 归档 --------
+archive_group_by: year
+
+# -------- 页脚 --------
+footer:
+  since: 2024
+  owner: ''
+  copyright: true
+  custom_text: ''
+  # ICP 备案号（工信部要求）：留空则不显示；显示时自动链接到工信部备案查询系统
+  icp: ''
+  icp_link: https://beian.miit.gov.cn/
+
+# -------- 功能开关 --------
+darkmode:
+  enable: true
+  auto: false
+
+search:
+  enable: true
+
+back_to_top: true
+scroll_percent: true
+
+# -------- 调色板 --------
+# 取自 bcxm / Butterfly 系的默认配色，改这里即可整体换色
+theme_color:
+  main: '#49B1F5'
+  paginator: '#00c4b6'
+  button_hover: '#FF7242'
+  text_selection: '#00c4b6'
+  link: '#99a9bf'
+  meta: '#858585'
+  hr: '#A4D8FA'
+  code_foreground: '#F47466'
+  toc: '#00c4b6'
+
+# 深色模式配色
+dark_color:
+  background: '#121212'
+  card: '#1e1e1e'
+  text: '#c4c6c9'
+  text_highlight: '#ffffff'
+  border: '#2a2a2a'

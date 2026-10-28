@@ -1,0 +1,17 @@
+<div id="rightside" class="rightside">
+  <% if (theme.back_to_top !== false) { %>
+  <button id="back-to-top" class="rightside-btn" type="button" aria-label="返回顶部" title="返回顶部">
+    <svg class="progress-ring" viewBox="0 0 36 36" aria-hidden="true">
+      <circle class="ring-track" cx="18" cy="18" r="15.5"></circle>
+      <circle class="ring-bar" id="ring-bar" cx="18" cy="18" r="15.5"></circle>
+    </svg>
+    <%- icon('arrow-up') %>
+  </button>
+  <% } %>
+
+  <% if (is_post() && theme.toc && theme.toc.enable) { %>
+  <button id="toc-toggle" class="rightside-btn toc-mobile-btn" type="button" aria-label="目录" title="目录">
+    <%- icon('list') %>
+  </button>
+  <% } %>
+</div>

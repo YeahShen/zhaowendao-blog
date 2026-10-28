@@ -1,0 +1,13 @@
+<div class="search-modal" id="search-modal" aria-hidden="true" data-index="<%= url_for('/search.json') %>">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="站内搜索">
+    <div class="search-field">
+      <%- icon('search') %>
+      <input type="search" id="search-input" placeholder="搜索文章、分类、标签…" autocomplete="off" spellcheck="false">
+      <kbd class="search-esc">ESC</kbd>
+    </div>
+    <div class="search-results" id="search-results">
+      <p class="search-hint">输入关键词开始搜索，支持标题、摘要与分类。</p>
+    </div>
+  </div>
+</div>
