@@ -85,5 +85,10 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+        # Aliyun ACR rejects BuildKit's provenance/SBOM attestation manifests
+        # ("denied: unknown manifest class for application/vnd.oci.empty.v1+json"),
+        # so push a plain image manifest instead.
+        provenance: false
+        sbom: false
         cache-from: type=gha
         cache-to: type=gha,mode=max
