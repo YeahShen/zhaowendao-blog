@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Ashen
+title: zhaowendao
 subtitle: '记录 · 分享 · 折腾'
 description: '朝闻道，夕死可矣'
-keywords: '博客,技术,资源,分享'
+keywords: '博客,技术,资源,分享' 
 author: Ashen
 language: zh-CN
 timezone: 'Asia/Shanghai'
