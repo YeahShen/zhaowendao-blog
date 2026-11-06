@@ -1050,6 +1050,24 @@ button {
   border-bottom-color: currentColor;
 }
 
+/* 公安备案：图标与备案号同行居中，图标保持原始像素比例 */
+.site-footer .beian-police {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+}
+
+.site-footer .beian-icon {
+  height: 18px;
+  width: auto;
+  flex: none;
+  object-fit: contain;
+}
+
+/* 与 inline-flex 的公安备案链接对齐分隔符 */
+.site-footer .footer-beian .footer-sep { vertical-align: middle; }
+
 /* ---------- 12. 右下角按钮 ---------- */
 .rightside {
   position: fixed;

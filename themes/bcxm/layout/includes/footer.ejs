@@ -1,17 +1,24 @@
+<%
+  var f = theme.footer || {};
+  var sinceYear = Number(f.since) || 2024;
+  var nowYear = new Date().getFullYear();
+  var policeHref = f.police_link
+    || ('https://beian.mps.gov.cn/#/query/webSearch?code='
+        + (f.police_code || String(f.police || '').replace(/[^\d]/g, '')));
+%>
 <footer id="footer" class="site-footer">
   <div class="footer-inner">
-    <% if (theme.footer && theme.footer.custom_text) { %>
-    <p class="footer-custom"><%- theme.footer.custom_text %></p>
+    <% if (f.custom_text) { %>
+    <p class="footer-custom"><%- f.custom_text %></p>
     <% } %>
 
     <p class="footer-copyright">
       <span class="footer-symbol" aria-hidden="true">©</span>
-      <%= theme.footer && theme.footer.since ? theme.footer.since : 2024 %>
-      - <%= new Date().getFullYear() %>
-      By <%= (theme.footer && theme.footer.owner) || config.author %>
+      <%= sinceYear %><% if (sinceYear !== nowYear) { %> - <%= nowYear %><% } %>
+      By <%= f.owner || config.author %>
     </p>
 
-    <% if (!theme.footer || theme.footer.copyright !== false) { %>
+    <% if (f.copyright !== false) { %>
     <p class="footer-tech">
       框架 <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a>
       <span class="footer-sep">|</span>
@@ -19,12 +26,28 @@
     </p>
     <% } %>
 
-    <% if (theme.footer && theme.footer.icp) { %>
+    <% if (f.icp || f.police) { %>
     <p class="footer-beian">
+      <% if (f.icp) { %>
       <a class="beian-link"
-         href="<%= theme.footer.icp_link || 'https://beian.miit.gov.cn/' %>"
+         href="<%= f.icp_link || 'https://beian.miit.gov.cn/' %>"
          target="_blank"
-         rel="noopener noreferrer nofollow"><%= theme.footer.icp %></a>
+         rel="noopener noreferrer nofollow"><%= f.icp %></a>
+      <% } %>
+      <% if (f.icp && f.police) { %><span class="footer-sep">|</span><% } %>
+      <% if (f.police) { %>
+      <a class="beian-link beian-police"
+         href="<%= policeHref %>"
+         target="_blank"
+         rel="noopener noreferrer nofollow">
+        <% if (f.police_icon) { %><img class="beian-icon"
+             src="<%= url_for(f.police_icon) %>"
+             alt="公安备案"
+             height="18"
+             loading="lazy"
+             decoding="async"><% } %><span><%= f.police %></span>
+      </a>
+      <% } %>
     </p>
     <% } %>
   </div>

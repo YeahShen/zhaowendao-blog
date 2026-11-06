@@ -82,6 +82,11 @@ footer:
   # ICP 备案号（工信部要求）：留空则不显示；显示时自动链接到工信部备案查询系统
   icp: ''
   icp_link: https://beian.miit.gov.cn/
+  # 公安联网备案号：留空则不显示；链接自动指向全国互联网安全管理服务平台
+  police: ''
+  police_code: ''                      # 编号中的数字，留空则从 police 自动提取
+  police_icon: /img/beian.png          # 官方下发的公安备案图标，留空则不显示图标
+  police_link: ''                      # 留空则按 police_code 自动生成查询链接
 
 # -------- 功能开关 --------
 darkmode:

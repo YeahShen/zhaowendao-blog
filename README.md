@@ -61,19 +61,30 @@ blog/
 2. **主题信息** —— `_config.bcxm.yml` 里的 `avatar`、`description`、`social`、`menu`、`announcement`、`footer`（含 `footer.icp` 备案号）。
 3. **内容** —— 把 `source/_posts/` 下的示例文章换成自己的，`source/img/covers/` 换成自己的封面图。
 
-## ICP 备案
+## 备案信息
 
-在 `_config.bcxm.yml` 里填备案号即可，页脚会自动显示并链接到工信部备案查询系统：
+`_config.bcxm.yml` 的 `footer` 里填写备案号，页脚会自动显示并生成官方查询链接，两个备案可单独开关：
 
 ```yaml
 footer:
-  icp: '粤ICP备2026165365号'        # 留空则不显示
+  # 工信部 ICP 备案：链接到 beian.miit.gov.cn
+  icp: '粤ICP备2026165365号'            # 留空则不显示
   icp_link: https://beian.miit.gov.cn/
+
+  # 公安联网备案：编号 + 官方下发的备案图标
+  police: '粤公网安备44030002019157号'   # 留空则不显示
+  police_code: '44030002019157'         # 留空则从 police 里自动提取数字
+  police_icon: /img/beian.png           # 图标放在 source/img/ 下；留空则不显示图标
 ```
 
-工信部要求：备案号需在网站底部（通常是首页底部）清晰可见，并能点击跳转到 `beian.miit.gov.cn` 查询。本项目已按此实现，备案号出现在每个页面的页脚。
+- **ICP 备案**：工信部要求备案号在网站底部清晰可见，并能点击跳转到 `beian.miit.gov.cn` 查询。
+- **公安联网备案**：要求备案号与官方配发的「备案图标」一同展示，点击跳转到全国互联网安全管理服务平台（`beian.mps.gov.cn`）的该网站查询页。链接由 `police_code` 自动拼成 `…/query/webSearch?code=<编号>`。
 
-> 公安联网备案另有单独的图标（备案图标）要求，需要时把图标放到 `source/img/`，再用 `footer.custom_text` 插入即可。
+两个备案号渲染在同一行、以 `|` 分隔，并出现在**每个页面**的页脚：
+
+![页脚备案信息](docs/screenshots/footer-beian.png)
+
+> `source/img/beian.png` 是公安部平台官方图标文件（`https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png`，62×67），页脚按 18px 高度等比显示。要更新时下载同名文件覆盖即可，代码不用改。
 
 ## 导航写法
 

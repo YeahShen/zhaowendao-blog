@@ -48,6 +48,10 @@ footer:
   # ICP 备案号：工信部要求放在网站底部，并链接到备案查询系统
   icp: '粤ICP备2026165365号'
   icp_link: https://beian.miit.gov.cn/
+  # 公安联网备案号：需与官方下发的备案图标一同展示
+  police: '粤公网安备44030002019157号'
+  police_code: '44030002019157'
+  police_icon: /img/beian.png
 
 # 首页文章摘要长度（字数）
 index_excerpt_length: 140
